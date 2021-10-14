@@ -18,9 +18,8 @@ class TargetCSV(Target):
             th.StringType,
             description=(
                 "Optional path prefix which will be prepended to "
-                "the indicated by `file_naming_schema`."
+                "the file path indicated by `file_naming_schema`."
             ),
-            default="./",
         ),
         th.Property(
             "file_naming_scheme",

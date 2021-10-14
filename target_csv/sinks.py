@@ -40,6 +40,9 @@ class CSVSink(BatchSink):
             if replacement_pattern in result:
                 result = result.replace(replacement_pattern, val)
 
+        if self.config.get("output_path_prefix", None) is not None:
+            result = f"{self.config['output_path_prefix']}{result}"
+
         return Path(result)
 
     def _write_csv(self, filepath: Path, records: List[dict]) -> None:

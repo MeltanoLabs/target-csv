@@ -12,7 +12,8 @@ Built with the [Meltano SDK](https://sdk.meltano.com) for Singer Taps and Target
 
 | Setting                  | Required | Default | Description |
 |:-------------------------|:--------:|:-------:|:------------|
-| file_naming_scheme       | False    | None    | The scheme with which output files will be named. Naming scheme may leverage any of the following substitutions:<BR/>- `{stream_name}`<BR/>- `{datestamp}`<BR/>- `{timestamp}` |
+| output_path_prefix       | False    | None    | Optional path prefix which will be prepended to the file path indicated by `file_naming_schema`. |
+| file_naming_scheme       | False    | {stream_name}.csv    | The scheme with which output files will be named. Naming scheme may leverage any of the following substitutions:<BR/>- `{stream_name}`<BR/>- `{datestamp}`<BR/>- `{timestamp}` |
 | datestamp_format         | False    | %Y-%m-%d | A python format string to use when outputting the `{datestamp}` string. For reference, see: https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes |
 | timestamp_format         | False    | %Y-%m-%d.T%H%M%S | A python format string to use when outputting the `{timestamp}` string. For reference, see: https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes |
 | timestamp_timezone       | False    | UTC     | The timezone code or name to use when generating `{timestamp}` and `{datestamp}`. Defaults to 'UTC'. For a list of possible values, please see: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones |
@@ -25,28 +26,9 @@ A full list of supported settings and capabilities is available by running: `tar
 
 ## Installation
 
-- [ ] `Developer TODO:` Update the below as needed to correctly describe the install procedure. For instance, if you do not have a PyPi repo, or if you want users to directly install from your git repo, you can modify this step as appropriate.
-
 ```bash
-pipx install target-csv
+pipx install git+https://github.com/MeltanoLabs/target-csv.git
 ```
-
-## Configuration
-
-### Accepted Config Options
-
-- [ ] `Developer TODO:` Provide a list of config options accepted by the target.
-
-A full list of supported settings and capabilities for this
-target is available by running:
-
-```bash
-target-csv --about
-```
-
-### Source Authentication and Authorization
-
-- [ ] `Developer TODO:` If your target requires special access on the source system, or any special authentication requirements, provide those here.
 
 ## Usage
 
@@ -57,8 +39,12 @@ You can easily run `target-csv` by itself or in a pipeline using [Meltano](https
 ```bash
 target-csv --version
 target-csv --help
+
 # Test using the "Carbon Intensity" sample:
 tap-carbon-intensity | target-csv --config /path/to/target-csv-config.json
+
+# Test using the "Smoke Test" tap:
+tap-smoke-test --config=tap-smoke-test-config.json | target-csv
 ```
 
 ## Developer Resources
