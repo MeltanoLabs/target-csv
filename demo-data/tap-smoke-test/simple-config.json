@@ -1,0 +1,8 @@
+{
+  "streams": [
+    {
+      "stream_name":  "pageviews",
+      "input_filename": "demo-data/animals-data.jsonl"
+    }
+  ]
+}

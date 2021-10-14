@@ -1,0 +1,13 @@
+{
+  "streams": [
+    {
+      "stream_name":  "animals",
+      "input_filename": "demo-data/animals-data.jsonl",
+      "loop_count": 3
+    },
+    {
+      "stream_name":  "pageviews",
+      "input_filename": "demo-data/pageviews-data.jsonl"
+    }
+  ]
+}

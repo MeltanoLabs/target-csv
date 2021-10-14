@@ -1,0 +1,24 @@
+version: 1
+send_anonymous_usage_stats: true
+project_id: target-csv
+plugins:
+  extractors:
+  loaders:
+  - name: target-csv
+    namespace: target_csv
+    # TODO: To test using Meltano, replace with absolute path
+    #       to the target-csv.sh script:
+    executable: ./target-csv.sh
+    capabilities:
+    - state
+    - catalog
+    - discover
+    config:
+      start_date: '2010-01-01T00:00:00Z'
+    settings:
+    # TODO: To configure using Meltano, declare settings and their types here:
+    - name: username
+    - name: password
+      kind: password
+    - name: start_date
+      value: '2010-01-01T00:00:00Z'

@@ -1,0 +1,10 @@
+{
+  "streams": [
+    {
+      "stream_name":  "pageviews",
+      "input_filename": "demo-data/pageviews-data.jsonl",
+      "client_exception": false,
+      "schema_gen_exception": true
+    }
+  ]
+}

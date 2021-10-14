@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "target-csv"
+version = "0.0.1"
+description = "`target-csv` is a Singer target for CSV, built with the Meltano SDK for Singer Targets."
+authors = ["AJ Steers"]
+license = "Apache 2.0"
+
+[tool.poetry.dependencies]
+python = "<3.10,>=3.6.2"
+requests = "^2.25.1"
+singer-sdk = "^0.3.10"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.1.2"
+flake8 = "^3.9.2"
+mypy = "^0.910"
+black = {version = "^21.9b0", allow-prereleases = true}
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+# CLI declaration
+target-csv = 'target_csv.target:TargetCSV.cli'
