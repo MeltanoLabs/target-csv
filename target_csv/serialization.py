@@ -1,6 +1,6 @@
 import csv
-from typing import Any, Dict, Iterable, List
 from pathlib import Path
+from typing import List
 
 
 def write_csv(filepath: Path, records: List[dict], schema: dict) -> int:

@@ -1,12 +1,11 @@
 """CSV-related tests."""
 
-from typing import Dict, Any, List, Tuple
 from pathlib import Path
+from typing import Any, Dict, List, Tuple
 
 import pytest
 
-from target_csv.serialization import write_csv, read_csv
-
+from target_csv.serialization import read_csv, write_csv
 
 SAMPLE_DATASETS: List[Tuple[Dict, List[Dict[str, Any]]]] = [
     (

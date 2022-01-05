@@ -1,13 +1,12 @@
 """CSV target sink class, which handles writing streams."""
 
 import datetime
-import pytz
 import sys
-
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-from singer_sdk import PluginBase
 
+import pytz
+from singer_sdk import PluginBase
 from singer_sdk.sinks import BatchSink
 
 from target_csv.serialization import write_csv
