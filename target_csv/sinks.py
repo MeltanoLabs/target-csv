@@ -4,9 +4,9 @@ import datetime
 import pytz
 import sys
 
-from functools import cached_property
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
+from singer_sdk import PluginBase
 
 from singer_sdk.sinks import BatchSink
 
@@ -18,11 +18,24 @@ class CSVSink(BatchSink):
 
     max_size = sys.maxsize  # We want all records in one batch
 
-    @cached_property
+    def __init__(
+        self,
+        target: PluginBase,
+        stream_name: str,
+        schema: Dict,
+        key_properties: Optional[List[str]],
+    ) -> None:
+        self._timestamp_time: Optional[datetime.datetime]
+        super().__init__(target, stream_name, schema, key_properties)
+
+    @property
     def timestamp_time(self) -> datetime.datetime:
-        return datetime.datetime.now(
-            tz=pytz.timezone(self.config["timestamp_timezone"])
-        )
+        if not self._timestamp_time:
+            self._timestamp_time = datetime.datetime.now(
+                tz=pytz.timezone(self.config["timestamp_timezone"])
+            )
+
+        return self._timestamp_time
 
     @property
     def filepath_replacement_map(self) -> Dict[str, str]:
