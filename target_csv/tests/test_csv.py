@@ -27,7 +27,7 @@ SAMPLE_DATASETS: List[Tuple[Dict, List[Dict[str, Any]]]] = [
                 "complex_field": {"foo": "bar"},
             },
             # Special characters in string:
-            {"int_key": 4, "string_field": "''he\l|,o\"\\n", "complex_field": {}},
+            {"int_key": 4, "string_field": "''he\\l|,o\"\\n", "complex_field": {}},
             # Newline characters in string:
             {
                 "int_key": 5,
