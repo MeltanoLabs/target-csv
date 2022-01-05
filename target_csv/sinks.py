@@ -6,11 +6,11 @@ import sys
 
 from functools import cached_property
 from pathlib import Path
-from typing import Any, Dict, Iterable, List
+from typing import Any, Dict, List
 
 from singer_sdk.sinks import BatchSink
 
-import csv
+from target_csv.serialization import write_csv
 
 
 class CSVSink(BatchSink):
@@ -45,16 +45,6 @@ class CSVSink(BatchSink):
 
         return Path(result)
 
-    def _write_csv(self, filepath: Path, records: List[dict]) -> None:
-        """Write a CSV file."""
-        with open(filepath, "wt") as fp:
-            writer = csv.writer(fp, delimiter=",")
-            for i, record in enumerate(records, start=1):
-                if i == 1:
-                    writer.writerow(record.keys())
-
-                writer.writerow(record.values())
-
     def process_batch(self, context: dict) -> None:
         """Write out any prepped records and return once fully written."""
         output_file: Path = self.destination_path
@@ -78,4 +68,4 @@ class CSVSink(BatchSink):
 
         self.logger.info(f"Writing {len(context['records'])} records to file...")
 
-        self._write_csv(output_file, context["records"])
+        write_csv(output_file, context["records"], self.schema)
