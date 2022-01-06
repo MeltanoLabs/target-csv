@@ -11,9 +11,11 @@ SAMPLE_DATASETS: List[Tuple[Dict, List[Dict[str, Any]]]] = [
     (
         # JSON Schema
         {
-            "int_key": {"type": "int"},
-            "complex_field": {"type": ["object", "null"]},
-            "string_field": {"type": "string"},
+            "properties": {
+                "int_key": {"type": "int"},
+                "complex_field": {"type": ["object", "null"]},
+                "string_field": {"type": "string"},
+            }
         },
         # Records
         [

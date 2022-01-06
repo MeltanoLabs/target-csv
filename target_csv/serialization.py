@@ -5,7 +5,10 @@ from typing import List
 
 def write_csv(filepath: Path, records: List[dict], schema: dict) -> int:
     """Write a CSV file."""
-    keys: List[str] = list(schema.keys())
+    if "properties" not in schema:
+        raise ValueError("Stream's schema has no properties defined.")
+
+    keys: List[str] = list(schema["properties"].keys())
     with open(filepath, "wt", encoding="utf-8", newline="") as fp:
         writer = csv.DictWriter(fp, fieldnames=keys, dialect="excel")
         writer.writeheader()
