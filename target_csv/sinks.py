@@ -24,7 +24,7 @@ class CSVSink(BatchSink):
         schema: Dict,
         key_properties: Optional[List[str]],
     ) -> None:
-        self._timestamp_time: Optional[datetime.datetime]
+        self._timestamp_time: Optional[datetime.datetime] = None
         super().__init__(target, stream_name, schema, key_properties)
 
     @property
