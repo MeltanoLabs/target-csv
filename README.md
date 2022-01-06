@@ -97,7 +97,9 @@ Now you can test and orchestrate using Meltano:
 # Test invocation:
 meltano invoke target-csv --version
 # OR run a test `elt` pipeline with the Carbon Intensity sample tap:
-meltano elt tap-carbon-intensity target-csv
+meltano elt tap-smoke-test target-csv
+# Or with debug logging:
+meltano --log-level=debug elt tap-smoke-test target-csv
 ```
 
 ### SDK Dev Guide

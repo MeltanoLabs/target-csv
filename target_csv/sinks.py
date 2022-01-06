@@ -1,16 +1,15 @@
 """CSV target sink class, which handles writing streams."""
 
 import datetime
-import pytz
 import sys
-
-from functools import cached_property
 from pathlib import Path
-from typing import Any, Dict, Iterable, List
+from typing import Any, Dict, List, Optional
 
+import pytz
+from singer_sdk import PluginBase
 from singer_sdk.sinks import BatchSink
 
-import csv
+from target_csv.serialization import write_csv
 
 
 class CSVSink(BatchSink):
@@ -18,11 +17,24 @@ class CSVSink(BatchSink):
 
     max_size = sys.maxsize  # We want all records in one batch
 
-    @cached_property
+    def __init__(
+        self,
+        target: PluginBase,
+        stream_name: str,
+        schema: Dict,
+        key_properties: Optional[List[str]],
+    ) -> None:
+        self._timestamp_time: Optional[datetime.datetime] = None
+        super().__init__(target, stream_name, schema, key_properties)
+
+    @property
     def timestamp_time(self) -> datetime.datetime:
-        return datetime.datetime.now(
-            tz=pytz.timezone(self.config["timestamp_timezone"])
-        )
+        if not self._timestamp_time:
+            self._timestamp_time = datetime.datetime.now(
+                tz=pytz.timezone(self.config["timestamp_timezone"])
+            )
+
+        return self._timestamp_time
 
     @property
     def filepath_replacement_map(self) -> Dict[str, str]:
@@ -44,16 +56,6 @@ class CSVSink(BatchSink):
             result = f"{self.config['output_path_prefix']}{result}"
 
         return Path(result)
-
-    def _write_csv(self, filepath: Path, records: List[dict]) -> None:
-        """Write a CSV file."""
-        with open(filepath, "wt") as fp:
-            writer = csv.writer(fp, delimiter=",")
-            for i, record in enumerate(records, start=1):
-                if i == 1:
-                    writer.writerow(record.keys())
-
-                writer.writerow(record.values())
 
     def process_batch(self, context: dict) -> None:
         """Write out any prepped records and return once fully written."""
@@ -78,4 +80,4 @@ class CSVSink(BatchSink):
 
         self.logger.info(f"Writing {len(context['records'])} records to file...")
 
-        self._write_csv(output_file, context["records"])
+        write_csv(output_file, context["records"], self.schema)
