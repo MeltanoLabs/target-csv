@@ -16,6 +16,8 @@ plugins:
         input_filename: https://gitlab.com/meltano/tap-smoke-test/-/raw/main/demo-data/animals-data.jsonl
       - stream_name: smoketest-pageviews
         input_filename: https://gitlab.com/meltano/tap-smoke-test/-/raw/main/demo-data/pageviews-data.jsonl
+      - stream_name: smoketest-fakeusers
+        input_filename: ./demo-data/fake-users.jsonl
   loaders:
   - name: target-csv
     namespace: target_csv
