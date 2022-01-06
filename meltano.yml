@@ -1,24 +1,31 @@
 version: 1
 send_anonymous_usage_stats: true
-project_id: target-csv
+project_id: d147c305-5d33-4982-80b7-c585a868affe
 plugins:
   extractors:
-  loaders:
-  - name: target-csv
-    namespace: target_csv
-    # TODO: To test using Meltano, replace with absolute path
-    #       to the target-csv.sh script:
-    executable: ./target-csv.sh
+  - name: tap-smoke-test
+    namespace: tap_smoke_test
+    pip_url: git+https://gitlab.com/meltano/tap-smoke-test.git
     capabilities:
     - state
     - catalog
     - discover
     config:
-      start_date: '2010-01-01T00:00:00Z'
+      streams:
+      - stream_name: smoketest-animals
+        input_filename: https://gitlab.com/meltano/tap-smoke-test/-/raw/main/demo-data/animals-data.jsonl
+      - stream_name: smoketest-pageviews
+        input_filename: https://gitlab.com/meltano/tap-smoke-test/-/raw/main/demo-data/pageviews-data.jsonl
+  loaders:
+  - name: target-csv
+    namespace: target_csv
+    executable: ./target-csv.sh
+    capabilities:
+    - state
+    - catalog
+    - discover
     settings:
-    # TODO: To configure using Meltano, declare settings and their types here:
-    - name: username
-    - name: password
-      kind: password
-    - name: start_date
-      value: '2010-01-01T00:00:00Z'
+    - name: output_path_prefix
+      kind: string
+    config:
+      output_path_prefix: ./.output/
