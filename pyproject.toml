@@ -8,10 +8,9 @@ license = "Apache 2.0"
 [tool.poetry.dependencies]
 python = "<3.11,>=3.7.1"
 requests = "^2.25.1"
-singer-sdk = {path = "../../sdk", develop = true}
+singer-sdk = {git = "https://github.com/meltano/sdk.git", rev = "kgpayne/issue1169", extras=["testing"]}
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.1.2"
 flake8 = "^3.9.2"
 mypy = "^0.910"
 black = {version = "^21.9b0", allow-prereleases = true}
