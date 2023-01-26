@@ -12,7 +12,7 @@ singer-sdk = {git = "https://github.com/meltano/sdk.git", rev = "kgpayne/issue11
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.9.2"
-mypy = "^0.910"
+mypy = "^0.991"
 black = "^22.3.0"
 types-pytz = "^2021.3.3"
 tox = "^3.24.5"
