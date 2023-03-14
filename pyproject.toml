@@ -2,28 +2,47 @@
 name = "target-csv"
 version = "0.0.1"
 description = "`target-csv` is a Singer target for CSV, built with the Meltano SDK for Singer Targets."
-authors = ["AJ Steers"]
+authors = ["Meltano <hello@meltano.com>"]
 license = "Apache 2.0"
 
 [tool.poetry.dependencies]
-python = "<3.10,>=3.6.2"
-requests = "^2.25.1"
-singer-sdk = "^0.3.10"
+python = ">=3.7.0,<3.12"
+requests = "^2.28.2"
+singer-sdk = "^0.21.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.1.2"
-flake8 = "^3.9.2"
-mypy = "^0.910"
-black = {version = "^21.9b0", allow-prereleases = true}
-types-pytz = "^2021.3.3"
-tox = "^3.24.5"
-isort = "^5.10.1"
-pydocstyle = "^6.1.1"
+pytest = "^7.2.2"
+
+[tool.poetry.scripts]
+target-csv = 'target_csv.target:TargetCSV.cli'
 
 [build-system]
 requires = ["poetry-core>=1.0.7"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.poetry.scripts]
-# CLI declaration
-target-csv = 'target_csv.target:TargetCSV.cli'
+[tool.ruff]
+target-version = "py37"
+line-length = 88
+ignore = [
+    "ANN101", # Missing type annotation for `self` in method
+    "ANN102", # Missing type annotation for `cls` in class method
+    "ANN401", # Allow `typing.Any` as parameter type
+]
+select = [
+    "ANN",  # flake8-annotations
+    "C90",  # mccabe
+    "D",    # pydocstyle
+    "E",    # pycodestyle (error)
+    "F",    # pyflakes
+    "W",    # pycodestyle (warning)
+    "S",    # flake8-bandit
+]
+
+[tool.ruff.flake8-annotations]
+allow-star-arg-any = true
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+[tool.ruff.per-file-ignores]
+"**/tests/*" = ["ANN", "D1", "S101"]
