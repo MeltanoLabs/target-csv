@@ -17,7 +17,7 @@ class CSVSink(BatchSink):
 
     max_size = sys.maxsize  # We want all records in one batch
 
-    def __init__(
+    def __init__(  # noqa: D107
         self,
         target: PluginBase,
         stream_name: str,
@@ -28,7 +28,7 @@ class CSVSink(BatchSink):
         super().__init__(target, stream_name, schema, key_properties)
 
     @property
-    def timestamp_time(self) -> datetime.datetime:
+    def timestamp_time(self) -> datetime.datetime:  # noqa: D102
         if not self._timestamp_time:
             self._timestamp_time = datetime.datetime.now(
                 tz=pytz.timezone(self.config["timestamp_timezone"])
@@ -37,7 +37,7 @@ class CSVSink(BatchSink):
         return self._timestamp_time
 
     @property
-    def filepath_replacement_map(self) -> Dict[str, str]:
+    def filepath_replacement_map(self) -> Dict[str, str]:  # noqa: D102
         return {
             "stream_name": self.stream_name,
             "datestamp": self.timestamp_time.strftime(self.config["datestamp_format"]),
@@ -45,7 +45,7 @@ class CSVSink(BatchSink):
         }
 
     @property
-    def destination_path(self) -> Path:
+    def destination_path(self) -> Path:  # noqa: D102
         result = self.config["file_naming_scheme"]
         for key, val in self.filepath_replacement_map.items():
             replacement_pattern = "{" f"{key}" "}"
@@ -61,7 +61,7 @@ class CSVSink(BatchSink):
         """Write out any prepped records and return once fully written."""
         output_file: Path = self.destination_path
         self.logger.info(f"Writing to destination file '{output_file.resolve()}'...")
-        new_contents: dict
+        new_contents: dict  # noqa: F842
         create_new = (
             self.config["overwrite_behavior"] == "replace_file"
             or not output_file.exists()

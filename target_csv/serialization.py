@@ -1,4 +1,4 @@
-import csv
+import csv  # noqa: D100
 from pathlib import Path
 from typing import List
 
@@ -9,7 +9,7 @@ def write_csv(filepath: Path, records: List[dict], schema: dict) -> int:
         raise ValueError("Stream's schema has no properties defined.")
 
     keys: List[str] = list(schema["properties"].keys())
-    with open(filepath, "wt", encoding="utf-8", newline="") as fp:
+    with open(filepath, "w", encoding="utf-8", newline="") as fp:
         writer = csv.DictWriter(fp, fieldnames=keys, dialect="excel")
         writer.writeheader()
         for record_count, record in enumerate(records, start=1):
