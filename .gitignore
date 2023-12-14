@@ -109,7 +109,7 @@ celerybeat.pid
 
 # Environments
 .env
-.venv
+.venv*
 env/
 venv/
 ENV/
@@ -135,7 +135,8 @@ dmypy.json
 .pyre/
 /analytics.json
 
-# VS Code
+# IDEs
+.idea
 .vscode/
 
 # Ruff
