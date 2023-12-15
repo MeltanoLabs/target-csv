@@ -7,7 +7,7 @@ from singer_sdk.testing import get_target_test_class
 from target_csv.target import TargetCSV
 
 SAMPLE_CONFIG: Dict[str, Any] = {
-    # TODO: Initialize minimal target config
+    "escape_character": '"',
 }
 
 TestTargetCSV = get_target_test_class(TargetCSV, config=SAMPLE_CONFIG)
