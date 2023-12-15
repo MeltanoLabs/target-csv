@@ -19,8 +19,8 @@ Built with the [Meltano SDK](https://sdk.meltano.com) for Singer Taps and Target
 | timestamp_timezone       | False    | UTC     | The timezone code or name to use when generating `{timestamp}` and `{datestamp}`. Defaults to 'UTC'. For a list of possible values, please see: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones |
 | stream_maps              | False    | None    | Allows inline stream transformations and aliasing. For more information see: https://sdk.meltano.com/en/latest/stream_maps.html |
 | record_sort_property_name| False    | None    | A property in the record which will be used as a sort key.<BR/><BR/>If this property is omitted, records will not be sorted. |
-| overwrite_behavior       | False    | replace_file | Determines the overwrite behavior if destination file already exists. Must be one of the following string values: <BR/><BR/>- `append_records` (default) - append records at the insertion point<BR/>- `replace_file` - replace entire file using `default_CSV_template`
- |
+| overwrite_behavior       | False    | replace_file | Determines the overwrite behavior if destination file already exists. Must be one of the following string values: <BR/><BR/>- `append_records` (default) - append records at the insertion point<BR/>- `replace_file` - replace entire file using `default_CSV_template` |
+| escape_characters        | False    | None    | A string of characters to escape when writing CSV files. |
 
 A full list of supported settings and capabilities is available by running: `target-csv --about`
 
