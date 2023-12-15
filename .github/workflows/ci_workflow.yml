@@ -1,6 +1,11 @@
 name: Test Target CSV
 
-on: [push]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
   pytest:
@@ -10,17 +15,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install Poetry
-      uses: snok/install-poetry@v1
-      with:
-        version: 1.4.0
+      env:
+        PIP_CONSTRAINT: .github/workflows/constraints.txt
+      run:
+        pipx install poetry
     - name: Install dependencies
       run: |
         poetry install
