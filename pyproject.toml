@@ -3,15 +3,14 @@ name = "target-csv"
 version = "0.0.1"
 description = "`target-csv` is a Singer target for CSV, built with the Meltano SDK for Singer Targets."
 authors = ["Meltano <hello@meltano.com>"]
-license = "Apache 2.0"
+license = "Apache-2.0"
 
 [tool.poetry.dependencies]
-python = ">=3.7.1,<3.12"
-requests = "^2.31.0"
-singer-sdk = "^0.21.0"
+python = ">=3.8"
+singer-sdk = "~=0.34.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^7.2.2"
+pytest = "~=7.4"
 
 [tool.poetry.scripts]
 target-csv = 'target_csv.target:TargetCSV.cli'
@@ -21,8 +20,10 @@ requires = ["poetry-core>=1.0.7"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]
-target-version = "py37"
 line-length = 88
+target-version = "py38"
+
+[tool.ruff.lint]
 ignore = [
     "ANN101", # Missing type annotation for `self` in method
     "ANN102", # Missing type annotation for `cls` in class method
@@ -38,11 +39,11 @@ select = [
     "S",    # flake8-bandit
 ]
 
-[tool.ruff.flake8-annotations]
+[tool.ruff.lint.flake8-annotations]
 allow-star-arg-any = true
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "google"
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "**/tests/*" = ["ANN", "D1", "S101"]
