@@ -80,4 +80,9 @@ class CSVSink(BatchSink):
 
         self.logger.info(f"Writing {len(context['records'])} records to file...")
 
-        write_csv(output_file, context["records"], self.schema)
+        write_csv(
+            output_file,
+            context["records"],
+            self.schema,
+            escapechar=self.config.get("escape_character"),
+        )

@@ -92,5 +92,10 @@ class TargetCSV(Target):
             ),
             default="replace_file",
         ),
+        th.Property(
+            "escape_character",
+            th.StringType,
+            description="The character to use for escaping special characters.",
+        ),
     ).to_dict()
     default_sink_class = CSVSink
