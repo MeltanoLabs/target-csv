@@ -27,7 +27,7 @@ plugins:
     - catalog
     - discover
     settings:
-    - name: output_path_prefix
+    - name: output_path
       kind: string
     config:
-      output_path_prefix: ./.output/
+      output_path: ./.output

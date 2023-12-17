@@ -12,12 +12,25 @@ class TargetCSV(Target):
     name = "target-csv"
     config_jsonschema = th.PropertiesList(
         th.Property(
-            "output_path_prefix",
+            "output_path",
             th.StringType,
             description=(
-                "Optional path prefix which will be prepended to "
-                "the file path indicated by `file_naming_schema`."
+                "Filesystem path where to store output files. "
+                "By default, the current working directory will be used."
             ),
+        ),
+        th.Property(
+            "destination_path",
+            th.StringType,
+            description=(
+                "Filesystem path where to store output files. Alias for "
+                "`output_path` to be compatible with the `hotgluexyz` variant."
+            ),
+        ),
+        th.Property(
+            "output_path_prefix",
+            th.StringType,
+            description=("DEPRECATED. Filesystem path where to store output files."),
         ),
         th.Property(
             "file_naming_scheme",
