@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import pytz
-from singer_sdk import PluginBase
+from singer_sdk import Target
 from singer_sdk.sinks import BatchSink
 
 from target_csv.serialization import write_csv
@@ -19,7 +19,7 @@ class CSVSink(BatchSink):
 
     def __init__(  # noqa: D107
         self,
-        target: PluginBase,
+        target: Target,
         stream_name: str,
         schema: Dict,
         key_properties: Optional[List[str]],
