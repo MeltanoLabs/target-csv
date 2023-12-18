@@ -73,7 +73,9 @@ class CSVSink(BatchSink):
 
         filepath = Path(filename)
         if output_path is not None:
-            filepath = Path(output_path) / filepath
+            path = Path(output_path)
+            path.mkdir(parents=True, exist_ok=True)
+            filepath = path / filepath
 
         return filepath
 
