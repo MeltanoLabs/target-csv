@@ -2,11 +2,12 @@
 
 import datetime
 import sys
+import warnings
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import pytz
-from singer_sdk import PluginBase
+from singer_sdk import Target
 from singer_sdk.sinks import BatchSink
 
 from target_csv.serialization import write_csv
@@ -19,7 +20,7 @@ class CSVSink(BatchSink):
 
     def __init__(  # noqa: D107
         self,
-        target: PluginBase,
+        target: Target,
         stream_name: str,
         schema: Dict,
         key_properties: Optional[List[str]],
@@ -45,21 +46,40 @@ class CSVSink(BatchSink):
         }
 
     @property
-    def destination_path(self) -> Path:  # noqa: D102
-        result = self.config["file_naming_scheme"]
+    def output_file(self) -> Path:  # noqa: D102
+        filename = self.config["file_naming_scheme"]
         for key, val in self.filepath_replacement_map.items():
             replacement_pattern = "{" f"{key}" "}"
-            if replacement_pattern in result:
-                result = result.replace(replacement_pattern, val)
+            if replacement_pattern in filename:
+                filename = filename.replace(replacement_pattern, val)
 
-        if self.config.get("output_path_prefix", None) is not None:
-            result = f"{self.config['output_path_prefix']}{result}"
+        if "output_path_prefix" in self.config:
+            warnings.warn(
+                "The property `output_path_prefix` is deprecated, "
+                "please use `output_path`.",
+                category=UserWarning,
+            )
 
-        return Path(result)
+        # Accept all possible properties defining the output path.
+        # - output_path: The new designated property.
+        # - destination_path: Alias for `output_path` (`hotgluexyz` compat).
+        # - output_path_prefix: The property used up until now.
+        output_path = self.config.get(
+            "output_path",
+            self.config.get(
+                "destination_path", self.config.get("output_path_prefix", None)
+            ),
+        )
+
+        filepath = Path(filename)
+        if output_path is not None:
+            filepath = Path(output_path) / filepath
+
+        return filepath
 
     def process_batch(self, context: dict) -> None:
         """Write out any prepped records and return once fully written."""
-        output_file: Path = self.destination_path
+        output_file: Path = self.output_file
         self.logger.info(f"Writing to destination file '{output_file.resolve()}'...")
         new_contents: dict  # noqa: F842
         create_new = (
