@@ -12,7 +12,7 @@ Built with the [Meltano SDK](https://sdk.meltano.com) for Singer Taps and Target
 
 | Setting                  | Required | Default | Description |
 |:-------------------------|:--------:|:-------:|:------------|
-| output_path              | False    | None    | Filesystem path where to store output files. By default, the current working directory will be used. |
+| output_path              | False    | None    | Filesystem path where to store output files. By default, the current working directory will be used. When specified, the output directory will be created automatically. |
 | file_naming_scheme       | False    | {stream_name}.csv    | The scheme with which output files will be named. Naming scheme may leverage any of the following substitutions:<BR/>- `{stream_name}`<BR/>- `{datestamp}`<BR/>- `{timestamp}` |
 | datestamp_format         | False    | %Y-%m-%d | A python format string to use when outputting the `{datestamp}` string. For reference, see: https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes |
 | timestamp_format         | False    | %Y-%m-%d.T%H%M%S | A python format string to use when outputting the `{timestamp}` string. For reference, see: https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes |
