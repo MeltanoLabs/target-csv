@@ -7,15 +7,16 @@ from typing import Any, Dict, List, Optional
 
 import pytz
 from singer_sdk import PluginBase
-from singer_sdk.sinks import BatchSink
+from singer_sdk.sinks import RecordSink
 
-from target_csv.serialization import write_csv
+from target_csv.serialization import write_csv, write_csv_header, write_csv_row
 
 
-class CSVSink(BatchSink):
+class CSVSink(RecordSink):
     """CSV target sink class."""
 
     max_size = sys.maxsize  # We want all records in one batch
+    wrote_header = False
 
     def __init__(  # noqa: D107
         self,
@@ -57,27 +58,8 @@ class CSVSink(BatchSink):
 
         return Path(result)
 
-    def process_batch(self, context: dict) -> None:
-        """Write out any prepped records and return once fully written."""
-        output_file: Path = self.destination_path
-        self.logger.info(f"Writing to destination file '{output_file.resolve()}'...")
-        new_contents: dict  # noqa: F842
-        create_new = (
-            self.config["overwrite_behavior"] == "replace_file"
-            or not output_file.exists()
-        )
-        if not create_new:
-            raise NotImplementedError("Append mode is not yet supported.")
-
-        if not isinstance(context["records"], list):
-            self.logger.warning(f"No values in {self.stream_name} records collection.")
-            context["records"] = []
-
-        records: List[Dict[str, Any]] = context["records"]
-        if "record_sort_property_name" in self.config:
-            sort_property_name = self.config["record_sort_property_name"]
-            records = sorted(records, key=lambda x: x[sort_property_name])
-
-        self.logger.info(f"Writing {len(context['records'])} records to file...")
-
-        write_csv(output_file, context["records"], self.schema)
+    def process_record(self, record: dict, context: dict) -> None:
+        if not self.wrote_header:
+            write_csv_header(self.destination_path, self.schema)
+            self.wrote_header = True
+        write_csv_row(self.destination_path, record, self.schema)

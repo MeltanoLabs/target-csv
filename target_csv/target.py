@@ -73,24 +73,5 @@ class TargetCSV(Target):
                 "https://sdk.meltano.com/en/latest/stream_maps.html"
             ),
         ),
-        th.Property(
-            "record_sort_property_name",
-            th.StringType,
-            description=(
-                "A property in the record which will be used as a sort key.\n\n"
-                "If this property is omitted, records will not be sorted."
-            ),
-        ),
-        th.Property(
-            "overwrite_behavior",
-            th.StringType,
-            description=(
-                "Determines the overwrite behavior if destination file already exists. "
-                "Must be one of the following string values: \n\n"
-                "- `append_records` (default) - append records at the insertion point\n"
-                "- `replace_file` - replace entire file using `default_CSV_template`\n"
-            ),
-            default="replace_file",
-        ),
     ).to_dict()
     default_sink_class = CSVSink
