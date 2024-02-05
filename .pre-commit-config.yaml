@@ -23,22 +23,7 @@ repos:
   hooks:
   - id: ruff
     args: [--fix, --exit-non-zero-on-fix]
-
-- repo: https://github.com/psf/black
-  rev: 24.1.1
-  hooks:
-  - id: black
-
-- repo: https://github.com/pycqa/isort
-  rev: 5.13.2
-  hooks:
-  - id: isort
-
-- repo: https://github.com/asottile/pyupgrade
-  rev: v3.15.0
-  hooks:
-  - id: pyupgrade
-    args: ['--py37-plus']
+  - id: ruff-format
 
 - repo: https://github.com/pre-commit/mirrors-mypy
   rev: v1.8.0
