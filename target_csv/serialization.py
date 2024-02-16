@@ -5,7 +5,6 @@ import os
 
 
 def create_folder_if_not_exists(func) -> None:
-
     def wrapper(*args, **kwargs) -> None:
         try:
             filepath = args[0]
