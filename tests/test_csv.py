@@ -58,9 +58,28 @@ def output_filepath(output_dir) -> Path:
     return result
 
 
+@pytest.fixture
+def test_file_paths(output_dir) -> List[Path]:
+    paths = []
+    for dir in range(4):
+        path = Path(output_dir / f"test-dir-{dir}/csv-test-output-{dir}.csv")
+        if path.exists():
+            path.unlink()
+
+        paths.append(path)
+
+    return paths
+
+
 def test_csv_write(output_filepath) -> None:
     for schema, records in SAMPLE_DATASETS:
         write_csv(filepath=output_filepath, records=records, schema=schema)
+
+
+def test_csv_write_if_not_exists(test_file_paths) -> None:
+    for path in test_file_paths:
+        for schema, records in SAMPLE_DATASETS:
+            write_csv(filepath=path, records=records, schema=schema)
 
 
 def test_csv_roundtrip(output_filepath) -> None:
