@@ -77,7 +77,6 @@ def test_csv_write(output_filepath) -> None:
 
 
 def test_csv_write_if_not_exists(test_file_paths) -> None:
-
     for path in test_file_paths:
         for schema, records in SAMPLE_DATASETS:
             write_csv(filepath=path, records=records, schema=schema)
