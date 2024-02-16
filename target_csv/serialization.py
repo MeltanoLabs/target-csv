@@ -1,8 +1,25 @@
 import csv  # noqa: D100
 from pathlib import Path
 from typing import Any, List
+import os
 
 
+def create_folder_if_not_exists(func) -> None:
+
+    def wrapper(*args, **kwargs) -> None:
+        try:
+            filepath = args[0]
+        except:
+            filepath = kwargs["filepath"]
+        folder = os.path.dirname(filepath)
+        if not os.path.exists(folder) and folder != "":
+            os.makedirs(folder)
+        return func(*args, **kwargs)
+
+    return wrapper
+
+
+@create_folder_if_not_exists
 def write_csv(filepath: Path, records: List[dict], schema: dict, **kwargs: Any) -> int:
     """Write a CSV file."""
     if "properties" not in schema:
