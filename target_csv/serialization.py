@@ -4,7 +4,7 @@ from typing import Any, List
 import os
 
 
-def create_folder_if_not_exists(func: Any) -> None:
+def create_folder_if_not_exists(func: Any) -> int:
     """Decorator to create folder if it does not exist."""
 
     def wrapper(*args: Any, **kwargs: Any) -> int:
