@@ -7,7 +7,7 @@ import os
 def create_folder_if_not_exists(func: Any) -> None:
     """Decorator to create folder if it does not exist."""
 
-    def wrapper(*args: Any, **kwargs: Any) -> None:
+    def wrapper(*args: Any, **kwargs: Any) -> int:
         try:
             filepath = kwargs["filepath"]
         except KeyError:
