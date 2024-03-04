@@ -29,7 +29,7 @@ pytz = "~=2024.1"
 singer-sdk = "~=0.36.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "~=8.0"
+pytest = "~=8.1"
 
 [tool.poetry.scripts]
 target-csv = 'target_csv.target:TargetCSV.cli'
