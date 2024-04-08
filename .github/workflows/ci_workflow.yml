@@ -24,7 +24,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install Poetry
       env:
-        PIP_CONSTRAINT: .github/workflows/constraints.txt
+        PIP_CONSTRAINT: ${{ github.workspace }}/.github/workflows/constraints.txt
       run:
         pipx install poetry
     - name: Install dependencies
