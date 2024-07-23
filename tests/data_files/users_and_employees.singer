@@ -1,0 +1,21 @@
+{"type": "STATE", "value": {}}
+{"type": "SCHEMA", "stream": "employees", "schema": {"properties": {"employee_id": {"type": ["integer"]}, "first_name": {"type": ["string"]}, "last_name": {"type": ["string"]}}, "type": "object", "required": ["employee_id", "first_name", "last_name"]}, "key_properties": ["employee_id"]}
+{"type": "RECORD", "stream": "employees", "record": {"employee_id": 1, "first_name": "Alice", "last_name": "Smith"}, "time_extracted": "2024-07-19T20:34:52.872497+00:00"}
+{"type": "RECORD", "stream": "employees", "record": {"employee_id": 2, "first_name": "Bob", "last_name": "Johnson"}, "time_extracted": "2024-07-19T20:34:52.873094+00:00"}
+{"type": "RECORD", "stream": "employees", "record": {"employee_id": 3, "first_name": "Carol", "last_name": "McMann"}, "time_extracted": "2024-07-19T20:34:52.873231+00:00"}
+{"type": "RECORD", "stream": "employees", "record": {"employee_id": 4, "first_name": "Duke", "last_name": "DeLaney"}, "time_extracted": "2024-07-19T20:34:52.873309+00:00"}
+{"type": "RECORD", "stream": "employees", "record": {"employee_id": 5, "first_name": "Edward", "last_name": "Smith"}, "time_extracted": "2024-07-19T20:34:52.873379+00:00"}
+{"type": "RECORD", "stream": "employees", "record": {"employee_id": 6, "first_name": "Frank", "last_name": "Aggarwal"}, "time_extracted": "2024-07-19T20:34:52.873462+00:00"}
+{"type": "RECORD", "stream": "employees", "record": {"employee_id": 7, "first_name": "Gina", "last_name": "Griffith"}, "time_extracted": "2024-07-19T20:34:52.873703+00:00"}
+{"type": "RECORD", "stream": "employees", "record": {"employee_id": 8, "first_name": "Hiram", "last_name": "Green"}, "time_extracted": "2024-07-19T20:34:52.873801+00:00"}
+{"type": "STATE", "value": {"bookmarks": {"employees": {}}}}
+{"type": "SCHEMA", "stream": "users", "schema": {"properties": {"user_id": {"type": ["integer"]}, "first_name": {"type": ["string"]}, "last_name": {"type": ["string"]}}, "type": "object", "required": ["user_id", "first_name", "last_name"]}, "key_properties": ["user_id"]}
+{"type": "RECORD", "stream": "users", "record": {"user_id": 1, "first_name": "Abraham", "last_name": "Qamar"}, "time_extracted": "2024-07-19T20:34:52.879965+00:00"}
+{"type": "RECORD", "stream": "users", "record": {"user_id": 2, "first_name": "Betty", "last_name": "Pattinson"}, "time_extracted": "2024-07-19T20:34:52.880376+00:00"}
+{"type": "RECORD", "stream": "users", "record": {"user_id": 3, "first_name": "Charlie", "last_name": "Orlando"}, "time_extracted": "2024-07-19T20:34:52.880493+00:00"}
+{"type": "RECORD", "stream": "users", "record": {"user_id": 4, "first_name": "Deborah", "last_name": "Nooning"}, "time_extracted": "2024-07-19T20:34:52.880562+00:00"}
+{"type": "RECORD", "stream": "users", "record": {"user_id": 5, "first_name": "Edward", "last_name": "Michaelson"}, "time_extracted": "2024-07-19T20:34:52.880624+00:00"}
+{"type": "RECORD", "stream": "users", "record": {"user_id": 6, "first_name": "Francesca", "last_name": "Little"}, "time_extracted": "2024-07-19T20:34:52.880686+00:00"}
+{"type": "RECORD", "stream": "users", "record": {"user_id": 7, "first_name": "Graham", "last_name": "Kingston"}, "time_extracted": "2024-07-19T20:34:52.880901+00:00"}
+{"type": "RECORD", "stream": "users", "record": {"user_id": 8, "first_name": "Holly", "last_name": "Johnson"}, "time_extracted": "2024-07-19T20:34:52.881002+00:00"}
+{"type": "STATE", "value": {"bookmarks": {"employees": {}, "users": {}}}}
