@@ -11,7 +11,7 @@ def create_folder_if_not_exists(func: Any) -> Callable[..., int]:
             filepath = Path(kwargs["filepath"])
         except KeyError:
             filepath = Path(args[0])
-        filepath.parent.mkdir(exist_ok=True)
+        filepath.parent.mkdir(parents=True, exist_ok=True)
         return func(*args, **kwargs)
 
     return wrapper
