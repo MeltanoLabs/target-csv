@@ -45,7 +45,7 @@ SAMPLE_DATASETS: List[Tuple[Dict, List[Dict[str, Any]]]] = [
 
 
 def singer_file_to_target(file_name, target) -> None:
-    """Singer file to Target, emulates a tap run
+    """Singer file to Target, emulates a tap run.
 
     Equivalent to running cat file_path | target-name --config config.json.
     Note that this function loads all lines into memory, so it is
@@ -53,7 +53,7 @@ def singer_file_to_target(file_name, target) -> None:
 
     Args:
         file_name: name to file in .tests/data_files to be sent into target
-        Target: Target to pass data from file_path into..
+        target: Target to pass data from file_path into..
     """
     file_path = Path(__file__).parent / Path("./data_files") / Path(file_name)
     buf = io.StringIO()
