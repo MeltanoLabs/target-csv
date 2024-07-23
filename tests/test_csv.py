@@ -43,6 +43,7 @@ SAMPLE_DATASETS: List[Tuple[Dict, List[Dict[str, Any]]]] = [
     )
 ]
 
+
 def singer_file_to_target(file_name, target) -> None:
     """Singer file to Target, emulates a tap run
 
@@ -63,6 +64,7 @@ def singer_file_to_target(file_name, target) -> None:
                 # and print adds another line ending so we need to remove one.
     buf.seek(0)
     target.listen(buf)
+
 
 @pytest.fixture
 def output_dir() -> Path:
@@ -112,9 +114,10 @@ def test_csv_roundtrip(output_filepath) -> None:
                 # Note: Results are stringified during serialization
                 assert str(orig_record[key]) == new_record[key]
 
+
 def test_csv_multiple_streams(output_dir) -> None:
     """Tests syncing multiple streams. 30 times in a row to catch race condition.
-    
+
     Further discussion in #129.
     """
     file_name = "users_and_employees.singer"
@@ -122,6 +125,5 @@ def test_csv_multiple_streams(output_dir) -> None:
         path = Path(output_dir / "test_csv_multiple_streams" / f"{i}")
         shutil.rmtree(path, ignore_errors=True)
         singer_file_to_target(
-            file_name=file_name,
-            target=TargetCSV(config={"output_path": str(path)})
+            file_name=file_name, target=TargetCSV(config={"output_path": str(path)})
         )
