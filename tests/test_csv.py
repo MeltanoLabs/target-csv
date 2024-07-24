@@ -63,11 +63,8 @@ def test_file_paths(output_dir) -> List[Path]:
     paths = []
     for dir in range(4):
         path = Path(output_dir / f"test-dir-{dir}/csv-test-output-{dir}.csv")
-        if path.exists():
-            path.unlink()
-
+        path.unlink(missing_ok=True)
         paths.append(path)
-
     return paths
 
 

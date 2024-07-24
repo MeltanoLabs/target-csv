@@ -1,7 +1,6 @@
 import csv  # noqa: D100
 from pathlib import Path
 from typing import Any, List, Callable
-import os
 
 
 def create_folder_if_not_exists(func: Any) -> Callable[..., int]:
@@ -9,12 +8,10 @@ def create_folder_if_not_exists(func: Any) -> Callable[..., int]:
 
     def wrapper(*args: Any, **kwargs: Any) -> int:
         try:
-            filepath = kwargs["filepath"]
+            filepath = Path(kwargs["filepath"])
         except KeyError:
-            filepath = args[0]
-        folder = os.path.dirname(filepath)
-        if not os.path.exists(folder) and folder != "":
-            os.makedirs(folder)
+            filepath = Path(args[0])
+        filepath.parent.mkdir(parents=True, exist_ok=True)
         return func(*args, **kwargs)
 
     return wrapper
