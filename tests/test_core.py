@@ -16,9 +16,7 @@ if sys.version_info >= (3, 9):
 else:
     from importlib_resources import files
 
-SAMPLE_CONFIG: Dict[str, Any] = {
-    "escape_character": '"',
-}
+SAMPLE_CONFIG: Dict[str, Any] = {}
 
 
 class MultipleStreamsTest(TargetFileTestTemplate):

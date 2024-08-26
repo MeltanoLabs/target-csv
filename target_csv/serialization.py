@@ -1,18 +1,25 @@
 import csv  # noqa: D100
+import sys
 from pathlib import Path
-from typing import Any, List, Callable
+from typing import Any, List, Callable, TypeVar
+
+if sys.version_info < (3, 10):
+    from typing_extensions import Concatenate, ParamSpec
+else:
+    from typing import Concatenate, ParamSpec
+
+P = ParamSpec("P")
+T = TypeVar("T")
 
 
-def create_folder_if_not_exists(func: Any) -> Callable[..., int]:
+def create_folder_if_not_exists(
+    func: Callable[Concatenate[Path, P], T],
+) -> Callable[Concatenate[Path, P], T]:
     """Decorator to create folder if it does not exist."""
 
-    def wrapper(*args: Any, **kwargs: Any) -> int:
-        try:
-            filepath = Path(kwargs["filepath"])
-        except KeyError:
-            filepath = Path(args[0])
+    def wrapper(filepath: Path, *args: P.args, **kwargs: P.kwargs) -> T:
         filepath.parent.mkdir(parents=True, exist_ok=True)
-        return func(*args, **kwargs)
+        return func(filepath, *args, **kwargs)
 
     return wrapper
 
