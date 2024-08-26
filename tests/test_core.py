@@ -17,7 +17,7 @@ else:
     from importlib_resources import files
 
 SAMPLE_CONFIG: Dict[str, Any] = {
-    "escape_character": '"',
+    "escape_character": "\\",
 }
 
 
