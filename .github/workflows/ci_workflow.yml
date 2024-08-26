@@ -50,6 +50,7 @@ jobs:
         pipx install poetry
     - name: Install dependencies
       run: |
+        poetry env use ${{ matrix.python-version }}
         poetry install
     - name: Test with pytest
       run: |
