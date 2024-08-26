@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "target-csv"
 version = "0.0.1"
-description = "`target-csv` is a Singer target for CSV, built with the Meltano SDK for Singer Targets."
+description = "Singer target for CSV, built with the Meltano SDK for Singer Targets."
 authors = ["Meltano <hello@meltano.com>"]
 license = "Apache-2.0"
 keywords = [
@@ -21,6 +21,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
 ]
 
 [tool.poetry.dependencies]
