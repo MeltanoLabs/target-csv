@@ -27,7 +27,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = ">=3.8"
 pytz = "~=2024.1"
-singer-sdk = "~=0.40.0"
+singer-sdk = "~=0.41.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "~=8.3"
