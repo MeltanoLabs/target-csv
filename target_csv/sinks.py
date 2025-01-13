@@ -49,7 +49,7 @@ class CSVSink(BatchSink):
     def output_file(self) -> Path:  # noqa: D102
         filename = self.config["file_naming_scheme"]
         for key, val in self.filepath_replacement_map.items():
-            replacement_pattern = "{" f"{key}" "}"
+            replacement_pattern = f"{{{key}}}"
             if replacement_pattern in filename:
                 filename = filename.replace(replacement_pattern, val)
 
