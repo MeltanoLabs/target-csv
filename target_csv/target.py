@@ -107,7 +107,7 @@ class TargetCSV(Target):
         ),
         th.Property(
             "escape_character",
-            th.StringType,
+            th.StringType(min_length=1, max_length=1),
             description="The character to use for escaping special characters.",
         ),
     ).to_dict()
