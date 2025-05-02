@@ -21,11 +21,11 @@ plugins:
   loaders:
   - name: target-csv
     namespace: target_csv
-    executable: ./target-csv.sh
+    pip_url: -e .
     capabilities:
-    - state
-    - catalog
-    - discover
+    - about
+    - stream-maps
+    - schema-flattening
     settings:
     - name: output_path
       kind: string

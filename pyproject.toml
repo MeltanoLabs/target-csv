@@ -16,7 +16,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -41,7 +40,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]
 line-length = 88
-target-version = "py38"
+target-version = "py39"
 
 [tool.ruff.lint]
 ignore = [
@@ -53,8 +52,14 @@ select = [
     "D",    # pydocstyle
     "E",    # pycodestyle (error)
     "F",    # pyflakes
-    "W",    # pycodestyle (warning)
+    "FA",   # flake8-future-annotations
+    "FURB", # refurb
+    "PERF", # Perflint
+    "UP",   # pyupgrade
     "S",    # flake8-bandit
+    "SIM",  # flake8-simplify
+    "TC",   # flake8-type-checking
+    "W",    # pycodestyle (warning)
 ]
 
 [tool.ruff.lint.flake8-annotations]

@@ -7,28 +7,30 @@ import functools
 import sys
 import warnings
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, TYPE_CHECKING
 
 import pytz
-from singer_sdk import Target
 from singer_sdk.sinks import BatchSink
 
 from target_csv.serialization import write_batch, write_header
+
+if TYPE_CHECKING:
+    from singer_sdk import Target
 
 
 class CSVSink(BatchSink):
     """CSV target sink class."""
 
-    max_size = sys.maxsize  # We want all records in one batch
+    MAX_SIZE_DEFAULT = sys.maxsize
 
     def __init__(  # noqa: D107
         self,
         target: Target,
         stream_name: str,
-        schema: Dict,
-        key_properties: Optional[List[str]],
+        schema: dict,
+        key_properties: list[str] | None,
     ) -> None:
-        self._timestamp_time: Optional[datetime.datetime] = None
+        self._timestamp_time: datetime.datetime | None = None
         super().__init__(target, stream_name, schema, key_properties)
 
     @property
@@ -41,7 +43,7 @@ class CSVSink(BatchSink):
         return self._timestamp_time
 
     @property
-    def filepath_replacement_map(self) -> Dict[str, str]:  # noqa: D102
+    def filepath_replacement_map(self) -> dict[str, str]:  # noqa: D102
         return {
             "stream_name": self.stream_name,
             "datestamp": self.timestamp_time.strftime(self.config["datestamp_format"]),
@@ -113,7 +115,7 @@ class CSVSink(BatchSink):
             self.logger.warning("No values in %s records collection.", self.stream_name)
             context["records"] = []
 
-        records: List[Dict[str, Any]] = context["records"]
+        records: list[dict[str, Any]] = context["records"]
         if "record_sort_property_name" in self.config:
             sort_property_name = self.config["record_sort_property_name"]
             records = sorted(records, key=lambda x: x[sort_property_name])
