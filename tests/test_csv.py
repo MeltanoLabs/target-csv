@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Tuple
 
 import pytest
 
-from target_csv.serialization import read_csv, write_csv
+from target_csv.serialization import read_csv, write_batch, write_header
 
 SAMPLE_DATASETS: List[Tuple[Dict, List[Dict[str, Any]]]] = [
     (
@@ -70,18 +70,24 @@ def test_file_paths(output_dir) -> List[Path]:
 
 def test_csv_write(output_filepath) -> None:
     for schema, records in SAMPLE_DATASETS:
-        write_csv(filepath=output_filepath, records=records, schema=schema)
+        keys = list(schema["properties"].keys())
+        write_header(filepath=output_filepath, keys=keys)
+        write_batch(filepath=output_filepath, records=records, keys=keys)
 
 
 def test_csv_write_if_not_exists(test_file_paths) -> None:
     for path in test_file_paths:
         for schema, records in SAMPLE_DATASETS:
-            write_csv(filepath=path, records=records, schema=schema)
+            keys = list(schema["properties"].keys())
+            write_header(filepath=path, keys=keys)
+            write_batch(filepath=path, records=records, keys=keys)
 
 
 def test_csv_roundtrip(output_filepath) -> None:
     for schema, records in SAMPLE_DATASETS:
-        write_csv(filepath=output_filepath, records=records, schema=schema)
+        keys = list(schema["properties"].keys())
+        write_header(filepath=output_filepath, keys=keys)
+        write_batch(filepath=output_filepath, records=records, keys=keys)
         read_records = read_csv(filepath=output_filepath)
         for orig_record, new_record in zip(records, read_records):
             for key in orig_record.keys():

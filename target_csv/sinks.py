@@ -1,6 +1,9 @@
 """CSV target sink class, which handles writing streams."""
 
+from __future__ import annotations
+
 import datetime
+import functools
 import sys
 import warnings
 from pathlib import Path
@@ -10,7 +13,7 @@ import pytz
 from singer_sdk import Target
 from singer_sdk.sinks import BatchSink
 
-from target_csv.serialization import write_csv
+from target_csv.serialization import write_batch, write_header
 
 
 class CSVSink(BatchSink):
@@ -77,20 +80,37 @@ class CSVSink(BatchSink):
 
         return filepath
 
+    @functools.cached_property
+    def keys(self) -> list[str]:
+        """Get the header keys for the CSV file."""
+        if "properties" not in self.schema:
+            raise ValueError("Stream's schema has no properties defined")
+
+        return list(self.schema["properties"].keys())
+
+    @functools.cached_property
+    def escape_character(self) -> str | None:
+        """Get the escape character for the CSV file."""
+        return self.config.get("escape_character")
+
+    def setup(self) -> None:
+        """Create the output file and write the header."""
+        super().setup()
+        output_file = self.output_file
+        self.logger.info("Writing to destination file '%s'...", output_file.resolve())
+        write_header(
+            output_file,
+            self.keys,
+            dialect="excel",
+            escapechar=self.escape_character,
+        )
+
     def process_batch(self, context: dict) -> None:
         """Write out any prepped records and return once fully written."""
         output_file: Path = self.output_file
-        self.logger.info(f"Writing to destination file '{output_file.resolve()}'...")
-        new_contents: dict  # noqa: F842
-        create_new = (
-            self.config["overwrite_behavior"] == "replace_file"
-            or not output_file.exists()
-        )
-        if not create_new:
-            raise NotImplementedError("Append mode is not yet supported.")
 
         if not isinstance(context["records"], list):
-            self.logger.warning(f"No values in {self.stream_name} records collection.")
+            self.logger.warning("No values in %s records collection.", self.stream_name)
             context["records"] = []
 
         records: List[Dict[str, Any]] = context["records"]
@@ -98,11 +118,12 @@ class CSVSink(BatchSink):
             sort_property_name = self.config["record_sort_property_name"]
             records = sorted(records, key=lambda x: x[sort_property_name])
 
-        self.logger.info(f"Writing {len(context['records'])} records to file...")
+        self.logger.info(f"Appending {len(records)} records to file...")
 
-        write_csv(
+        write_batch(
             output_file,
-            context["records"],
-            self.schema,
-            escapechar=self.config.get("escape_character"),
+            records,
+            self.keys,
+            dialect="excel",
+            escapechar=self.escape_character,
         )

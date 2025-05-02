@@ -1,36 +1,20 @@
+"""Serialization utilities for CSV files."""
+
+from __future__ import annotations
+
 import csv  # noqa: D100
-import sys
+import tempfile
 from pathlib import Path
-from typing import Any, List, Callable, TypeVar
-
-if sys.version_info < (3, 10):
-    from typing_extensions import Concatenate, ParamSpec
-else:
-    from typing import Concatenate, ParamSpec
-
-P = ParamSpec("P")
-T = TypeVar("T")
+from typing import Any
 
 
-def create_folder_if_not_exists(
-    func: Callable[Concatenate[Path, P], T],
-) -> Callable[Concatenate[Path, P], T]:
-    """Decorator to create folder if it does not exist."""
-
-    def wrapper(filepath: Path, *args: P.args, **kwargs: P.kwargs) -> T:
-        filepath.parent.mkdir(parents=True, exist_ok=True)
-        return func(filepath, *args, **kwargs)
-
-    return wrapper
-
-
-@create_folder_if_not_exists
-def write_csv(filepath: Path, records: List[dict], schema: dict, **kwargs: Any) -> int:
+def write_csv(
+    filepath: Path,
+    records: list[dict],
+    keys: list[str],
+    **kwargs: Any,
+) -> int:
     """Write a CSV file."""
-    if "properties" not in schema:
-        raise ValueError("Stream's schema has no properties defined.")
-
-    keys: List[str] = list(schema["properties"].keys())
     with open(filepath, "w", encoding="utf-8", newline="") as fp:
         writer = csv.DictWriter(fp, fieldnames=keys, dialect="excel", **kwargs)
         writer.writeheader()
@@ -40,9 +24,37 @@ def write_csv(filepath: Path, records: List[dict], schema: dict, **kwargs: Any) 
     return record_count
 
 
-def read_csv(filepath: Path) -> List[dict]:
+def write_header(filepath: Path, keys: list[str], **kwargs: Any) -> None:
+    """Write a header to a CSV file.
+
+    Creates the parent directory if it doesn't exist.
+    """
+    filepath.parent.mkdir(parents=True, exist_ok=True)
+    with filepath.open("w", encoding="utf-8", newline="") as fp:
+        writer = csv.DictWriter(fp, fieldnames=keys, **kwargs)
+        writer.writeheader()
+
+
+def write_batch(
+    filepath: Path,
+    records: list[dict],
+    keys: list[str],
+    **kwargs: Any,
+) -> None:
+    """Write a batch of records to a CSV file."""
+    with tempfile.NamedTemporaryFile("w+", encoding="utf-8", newline="") as tmp_fp:
+        writer = csv.DictWriter(tmp_fp, fieldnames=keys, **kwargs)
+        writer.writerows(records)
+
+        tmp_fp.seek(0)
+
+        with filepath.open("a") as f:
+            f.write(tmp_fp.read())
+
+
+def read_csv(filepath: Path) -> list[dict]:
     """Read a CSV file."""
-    result: List[dict] = []
+    result: list[dict] = []
     with open(filepath, newline="") as fp:
         reader = csv.DictReader(fp, delimiter=",", dialect="excel")
         result.extend(iter(reader))
