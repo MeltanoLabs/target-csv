@@ -1,9 +1,10 @@
 [tool.poetry]
-name = "target-csv"
-version = "0.0.1"
+name = "meltanolabs-target-csv"
+version = "0.0.0"
 description = "Singer target for CSV, built with the Meltano SDK for Singer Targets."
 authors = ["Meltano <hello@meltano.com>"]
 license = "Apache-2.0"
+readme = "README.md"
 keywords = [
     "CSV",
     "Singer",
@@ -33,11 +34,16 @@ pytest = "~=8.3"
 singer-sdk = { version = "*", extras = ["testing"] }
 
 [tool.poetry.scripts]
-target-csv = 'target_csv.target:TargetCSV.cli'
+target-csv = 'meltanolabs_target_csv.target:TargetCSV.cli'
 
 [build-system]
-requires = ["poetry-core>=1.0.7"]
-build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=2.1.1", "poetry-dynamic-versioning>=1.8.2"]
+build-backend = "poetry_dynamic_versioning.backend"
+
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+style = "semver"
 
 [tool.ruff]
 line-length = 88

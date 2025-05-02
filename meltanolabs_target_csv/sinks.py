@@ -7,12 +7,12 @@ import functools
 import sys
 import warnings
 from pathlib import Path
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import pytz
 from singer_sdk.sinks import BatchSink
 
-from target_csv.serialization import write_batch, write_header
+from meltanolabs_target_csv.serialization import write_batch, write_header
 
 if TYPE_CHECKING:
     from singer_sdk import Target

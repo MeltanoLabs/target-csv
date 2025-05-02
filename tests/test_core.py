@@ -2,17 +2,16 @@
 
 from __future__ import annotations
 
-from typing import Any, TYPE_CHECKING
+from importlib.resources import files
+from typing import TYPE_CHECKING, Any
 
 from singer_sdk.testing import get_target_test_class
 from singer_sdk.testing.suites import TestSuite
 from singer_sdk.testing.templates import TargetFileTestTemplate
 
-from target_csv.target import TargetCSV
+from meltanolabs_target_csv.target import TargetCSV
 
 from . import data_files
-
-from importlib.resources import files
 
 if TYPE_CHECKING:
     from importlib.abc import Traversable

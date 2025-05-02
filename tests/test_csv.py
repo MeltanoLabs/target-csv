@@ -7,7 +7,7 @@ from typing import Any
 
 import pytest
 
-from target_csv.serialization import read_csv, write_batch, write_header
+from meltanolabs_target_csv.serialization import read_csv, write_batch, write_header
 
 SAMPLE_DATASETS: list[tuple[dict, list[dict[str, Any]]]] = [
     (
