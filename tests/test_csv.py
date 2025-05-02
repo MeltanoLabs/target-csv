@@ -1,13 +1,15 @@
 """CSV-related tests."""
 
+from __future__ import annotations
+
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any
 
 import pytest
 
 from target_csv.serialization import read_csv, write_batch, write_header
 
-SAMPLE_DATASETS: List[Tuple[Dict, List[Dict[str, Any]]]] = [
+SAMPLE_DATASETS: list[tuple[dict, list[dict[str, Any]]]] = [
     (
         # JSON Schema
         {
@@ -59,7 +61,7 @@ def output_filepath(output_dir) -> Path:
 
 
 @pytest.fixture
-def test_file_paths(output_dir) -> List[Path]:
+def test_file_paths(output_dir) -> list[Path]:
     paths = []
     for dir in range(4):
         path = Path(output_dir / f"test-dir-{dir}/csv-test-output-{dir}.csv")
@@ -90,6 +92,6 @@ def test_csv_roundtrip(output_filepath) -> None:
         write_batch(filepath=output_filepath, records=records, keys=keys)
         read_records = read_csv(filepath=output_filepath)
         for orig_record, new_record in zip(records, read_records):
-            for key in orig_record.keys():
+            for key in orig_record:
                 # Note: Results are stringified during serialization
                 assert str(orig_record[key]) == new_record[key]

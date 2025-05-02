@@ -32,3 +32,10 @@ repos:
     exclude: 'tests'
     additional_dependencies:
     - types-pytz==2022.7.1.2
+
+- repo: https://github.com/python-jsonschema/check-jsonschema
+  rev: 0.33.0
+  hooks:
+  - id: check-dependabot
+  - id: check-github-workflows
+  - id: check-meltano
