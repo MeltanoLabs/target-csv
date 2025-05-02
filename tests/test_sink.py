@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from target_csv.sinks import CSVSink
-from target_csv.target import TargetCSV
+from meltanolabs_target_csv.sinks import CSVSink
+from meltanolabs_target_csv.target import TargetCSV
 
 
 def test_sink_output_file_cwd():

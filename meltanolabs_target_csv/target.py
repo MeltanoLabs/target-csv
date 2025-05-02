@@ -3,13 +3,15 @@
 from singer_sdk import typing as th
 from singer_sdk.target_base import Target
 
-from target_csv.sinks import CSVSink
+from meltanolabs_target_csv.sinks import CSVSink
 
 
 class TargetCSV(Target):
     """A Singer target that generates CSV files."""
 
     name = "target-csv"
+    package_name = "meltanolabs-target-csv"
+
     config_jsonschema = th.PropertiesList(
         th.Property(
             "output_path",
