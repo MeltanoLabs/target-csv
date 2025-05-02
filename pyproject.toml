@@ -24,12 +24,13 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.8"
+python = ">=3.9"
 pytz = "~=2025.1"
-singer-sdk = "~=0.42.1"
+singer-sdk = "~=0.45.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "~=8.3"
+singer-sdk = { version = "*", extras = ["testing"] }
 
 [tool.poetry.scripts]
 target-csv = 'target_csv.target:TargetCSV.cli'
