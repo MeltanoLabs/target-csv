@@ -27,7 +27,7 @@ A full list of supported settings and capabilities is available by running: `tar
 ## Installation
 
 ```bash
-pipx install git+https://github.com/MeltanoLabs/target-csv.git
+uv tool install --from meltanolabs-target-csv target-csv
 ```
 
 ## Usage
@@ -54,7 +54,7 @@ tap-smoke-test --config=tap-smoke-test-config.json | target-csv
 ### Initialize your Development Environment
 
 ```bash
-pipx install poetry
+uv tool install poetry
 poetry install
 ```
 
@@ -84,11 +84,7 @@ the file.
 Next, install Meltano (if you haven't already) and any needed plugins:
 
 ```bash
-# Install meltano
-pipx install meltano
-# Initialize meltano within this directory
-cd target-csv
-meltano install
+uv tool install meltano
 ```
 
 Now you can test and orchestrate using Meltano:
@@ -96,8 +92,10 @@ Now you can test and orchestrate using Meltano:
 ```bash
 # Test invocation:
 meltano invoke target-csv --version
+
 # OR run a test `elt` pipeline with the Carbon Intensity sample tap:
-meltano elt tap-smoke-test target-csv
+meltano run tap-smoke-test target-csv
+
 # Or with debug logging:
 meltano --log-level=debug elt tap-smoke-test target-csv
 ```
