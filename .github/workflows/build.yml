@@ -21,7 +21,7 @@ jobs:
     needs: build
     environment:
       name: pypi
-      url: https://pypi.org/project/meltanolabs-target-csv${{ needs.build.outputs.version }}
+      url: https://pypi.org/project/meltanolabs-target-csv/${{ needs.build.outputs.version }}
 
     permissions:
       contents: write
