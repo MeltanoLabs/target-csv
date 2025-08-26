@@ -1,5 +1,7 @@
 # `target-csv`
 
+[![Python Versions](https://img.shields.io/pypi/pyversions/target-csv.svg)](https://pypi.org/project/target-csv)
+
 A Singer target that generates CSV files.
 
 Built with the [Meltano SDK](https://sdk.meltano.com) for Singer Taps and Targets.

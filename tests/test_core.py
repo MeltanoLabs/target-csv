@@ -6,7 +6,7 @@ from importlib.resources import files
 from typing import TYPE_CHECKING, Any
 
 from singer_sdk.testing import get_target_test_class
-from singer_sdk.testing.suites import TestSuite
+from singer_sdk.testing.suites import SingerTestSuite
 from singer_sdk.testing.templates import TargetFileTestTemplate
 
 from meltanolabs_target_csv.target import TargetCSV
@@ -33,7 +33,7 @@ TestTargetCSV = get_target_test_class(
     TargetCSV,
     config=SAMPLE_CONFIG,
     custom_suites=[
-        TestSuite(
+        SingerTestSuite(
             kind="target",
             tests=[MultipleStreamsTest],
         )
