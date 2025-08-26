@@ -17,17 +17,17 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.9"
+python = ">=3.10,<4"
 pytz = "~=2025.1"
-singer-sdk = "~=0.47.0"
+singer-sdk = "~=0.48.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "~=8.3"
