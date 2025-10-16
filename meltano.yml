@@ -26,6 +26,7 @@ plugins:
     - about
     - stream-maps
     - schema-flattening
+    - structured-logging
     settings:
     - name: output_path
       kind: string
