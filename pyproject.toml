@@ -1,10 +1,11 @@
-[tool.poetry]
+[project]
 name = "meltanolabs-target-csv"
-version = "0.0.0"
+dynamic = ["version"]
 description = "Singer target for CSV, built with the Meltano SDK for Singer Targets."
-authors = ["Meltano <hello@meltano.com>"]
-license = "Apache-2.0"
+authors = [{ name = "Meltano", email = "hello@meltano.com" }]
+requires-python = ">=3.10"
 readme = "README.md"
+license = "Apache-2.0"
 keywords = [
     "CSV",
     "Singer",
@@ -22,32 +23,35 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
+]
+dependencies = [
+    "pytz~=2025.1",
+    "singer-sdk~=0.48.1",
 ]
 
-[tool.poetry.dependencies]
-python = ">=3.10,<4"
-pytz = "~=2025.1"
-singer-sdk = "~=0.48.1"
+[project.scripts]
+target-csv = "meltanolabs_target_csv.target:TargetCSV.cli"
 
-[tool.poetry.group.dev.dependencies]
-pytest = "~=8.3"
-singer-sdk = { version = "*", extras = ["testing"] }
-
-[tool.poetry.scripts]
-target-csv = 'meltanolabs_target_csv.target:TargetCSV.cli'
+[dependency-groups]
+dev = [
+    { include-group = "test"},
+]
+test = [
+    "pytest~=8.3",
+    "pytest-github-actions-annotate-failures>=0.3.0",
+    "singer-sdk[testing]",
+]
 
 [build-system]
-requires = ["poetry-core>=2.1.1", "poetry-dynamic-versioning>=1.8.2"]
-build-backend = "poetry_dynamic_versioning.backend"
+requires = ["hatchling>=1.27,<2.0", "hatch-vcs>=0.5,<1"]
+build-backend = "hatchling.build"
 
-[tool.poetry-dynamic-versioning]
-enable = true
-vcs = "git"
-style = "semver"
+[tool.hatch.version]
+source = "vcs"
 
 [tool.ruff]
 line-length = 88
-target-version = "py39"
 
 [tool.ruff.lint]
 ignore = [
