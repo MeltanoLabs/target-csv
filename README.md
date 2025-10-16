@@ -56,8 +56,7 @@ tap-smoke-test --config=tap-smoke-test-config.json | target-csv
 ### Initialize your Development Environment
 
 ```bash
-uv tool install poetry
-poetry install
+uv sync
 ```
 
 ### Create and Run Tests
@@ -66,13 +65,13 @@ Create tests within the `target_csv/tests` subfolder and
   then run:
 
 ```bash
-poetry run pytest
+uv run pytest
 ```
 
-You can also test the `target-csv` CLI interface directly using `poetry run`:
+You can also test the `target-csv` CLI interface directly using `uv run`:
 
 ```bash
-poetry run target-csv --help
+uv run target-csv --help
 ```
 
 ### Testing with [Meltano](https://meltano.com/)
@@ -99,7 +98,7 @@ meltano invoke target-csv --version
 meltano run tap-smoke-test target-csv
 
 # Or with debug logging:
-meltano --log-level=debug elt tap-smoke-test target-csv
+meltano --log-level=debug run tap-smoke-test target-csv
 ```
 
 ### SDK Dev Guide
