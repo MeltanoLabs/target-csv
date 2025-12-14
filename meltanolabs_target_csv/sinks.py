@@ -95,6 +95,11 @@ class CSVSink(BatchSink):
         """Get the escape character for the CSV file."""
         return self.config.get("escape_character")
 
+    @functools.cached_property
+    def encoding(self) -> str:
+        """Get the encoding for the CSV file."""
+        return self.config.get("encoding", "utf-8")
+
     def setup(self) -> None:
         """Create the output file and write the header."""
         super().setup()
@@ -105,6 +110,7 @@ class CSVSink(BatchSink):
             self.keys,
             dialect="excel",
             escapechar=self.escape_character,
+            encoding=self.encoding,
         )
 
     def process_batch(self, context: dict) -> None:
@@ -128,4 +134,5 @@ class CSVSink(BatchSink):
             self.keys,
             dialect="excel",
             escapechar=self.escape_character,
+            encoding=self.encoding,
         )
