@@ -112,5 +112,15 @@ class TargetCSV(Target):
             th.StringType(min_length=1, max_length=1),
             description="The character to use for escaping special characters.",
         ),
+        th.Property(
+            "encoding",
+            th.StringType,
+            description=(
+                "The character encoding to use when writing CSV files. "
+                "Defaults to 'utf-8'. For a list of possible values, see: "
+                "https://docs.python.org/3/library/codecs.html#standard-encodings"
+            ),
+            default="utf-8",
+        ),
     ).to_dict()
     default_sink_class = CSVSink
