@@ -5,16 +5,15 @@ on:
     branches: [main]
     paths:
     - .github/workflows/ci_workflow.yml
-    - target_csv/**
+    - meltano_labs_target_csv/**
     - tests/**
     - pyproject.toml
     - tox.ini
     - uv.lock
   pull_request:
-    branches: [main]
     paths:
     - .github/workflows/ci_workflow.yml
-    - target_csv/**
+    - meltano_labs_target_csv/**
     - tests/**
     - pyproject.toml
     - tox.ini
