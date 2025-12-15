@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
     - .github/workflows/ci_workflow.yml
-    - meltano_labs_target_csv/**
+    - meltanolabs_target_csv/**
     - tests/**
     - pyproject.toml
     - tox.ini
@@ -13,7 +13,7 @@ on:
   pull_request:
     paths:
     - .github/workflows/ci_workflow.yml
-    - meltano_labs_target_csv/**
+    - meltanolabs_target_csv/**
     - tests/**
     - pyproject.toml
     - tox.ini
