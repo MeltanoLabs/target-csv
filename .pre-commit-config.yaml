@@ -34,7 +34,7 @@ repos:
     - types-pytz==2022.7.1.2
 
 - repo: https://github.com/python-jsonschema/check-jsonschema
-  rev: 0.37.1
+  rev: 0.37.2
   hooks:
   - id: check-dependabot
   - id: check-github-workflows
