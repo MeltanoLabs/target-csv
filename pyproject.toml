@@ -29,8 +29,8 @@ classifiers = [
 ]
 dynamic = [ "version" ]
 dependencies = [
-  "pytz>=2025.1,<2027",
-  "singer-sdk>=0.50.2,<0.55",
+  "pytz>=2025.1",
+  "singer-sdk~=0.54.5",
 ]
 [[project.authors]]
 name = "Meltano"
