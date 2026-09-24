@@ -1,0 +1,66 @@
+name: Test Target CSV
+
+permissions: {}
+
+on:
+  push:
+    branches: [main]
+    paths:
+    - .github/workflows/ci_workflow.yml
+    - meltanolabs_target_csv/**
+    - tests/**
+    - pyproject.toml
+    - tox.ini
+    - uv.lock
+  pull_request:
+    paths:
+    - .github/workflows/ci_workflow.yml
+    - meltanolabs_target_csv/**
+    - tests/**
+    - pyproject.toml
+    - tox.ini
+    - uv.lock
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+env:
+  FORCE_COLOR: 1
+
+jobs:
+  build-package:
+    name: Build & verify package
+    runs-on: ubuntu-latest
+    outputs:
+      supported-python-versions: ${{ steps.baipp.outputs.supported_python_classifiers_json_array }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: hynek/build-and-inspect-python-package@2abe76da66d0a6a4a227101f9348ee855797cfa5 # v3.0.1
+        id: baipp
+
+  pytest:
+    name: Tests
+    needs: [build-package]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ${{ fromJson(needs.build-package.outputs.supported-python-versions) }}
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
+    - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+      with:
+        python-version: ${{ matrix.python-version }}
+        version: ">=0.12"
+    - name: Test with pytest
+      env:
+        TOXENV: ${{ matrix.python-version }}
+      run: |
+        uvx tox

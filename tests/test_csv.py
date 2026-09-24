@@ -91,7 +91,7 @@ def test_csv_roundtrip(output_filepath) -> None:
         write_header(filepath=output_filepath, keys=keys)
         write_batch(filepath=output_filepath, records=records, keys=keys)
         read_records = read_csv(filepath=output_filepath)
-        for orig_record, new_record in zip(records, read_records):
+        for orig_record, new_record in zip(records, read_records, strict=False):
             for key in orig_record:
                 # Note: Results are stringified during serialization
                 assert str(orig_record[key]) == new_record[key]

@@ -1,0 +1,13 @@
+env_list = [
+    { prefix = "3.", start = 10, stop = 15 },
+]
+requires = [
+    "tox>=4.60"
+]
+
+[env_run_base]
+description = "run tests on Python {py_dot_ver}"
+set_env = { PYO3_USE_ABI3_FORWARD_COMPATIBILITY = "1" }
+pass_env = [ "PYTHONWARNINGS" ]
+dependency_groups = [ "test" ]
+commands = [ [ "pytest" ] ]

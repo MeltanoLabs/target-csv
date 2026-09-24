@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import sys
 from importlib.resources import files
 from typing import TYPE_CHECKING, Any
 
@@ -12,6 +13,11 @@ from singer_sdk.testing.templates import TargetFileTestTemplate
 from meltanolabs_target_csv.target import TargetCSV
 
 from . import data_files
+
+if sys.version_info >= (3, 12):
+    from typing import override
+else:
+    from typing_extensions import override
 
 if TYPE_CHECKING:
     from importlib.abc import Traversable
@@ -24,6 +30,7 @@ SAMPLE_CONFIG: dict[str, Any] = {
 class MultipleStreamsTest(TargetFileTestTemplate):
     name = "users_and_employees"
 
+    @override
     @property
     def singer_filepath(self) -> Traversable:
         return files(data_files) / f"{self.name}.singer"

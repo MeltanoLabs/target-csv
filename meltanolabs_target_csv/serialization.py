@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-import csv  # noqa: D100
+import csv
 import tempfile
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -20,7 +20,7 @@ def write_csv(
     with open(filepath, "w", encoding="utf-8", newline="") as fp:
         writer = csv.DictWriter(fp, fieldnames=keys, dialect="excel", **kwargs)
         writer.writeheader()
-        for record_count, record in enumerate(records, start=1):
+        for record_count, record in enumerate(records, start=1):  # noqa: B007
             writer.writerow(record)
 
     return record_count
