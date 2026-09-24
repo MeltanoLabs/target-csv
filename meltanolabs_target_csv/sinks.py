@@ -6,13 +6,18 @@ import datetime
 import functools
 import sys
 import warnings
+import zoneinfo
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
-import pytz
 from singer_sdk.sinks import BatchSink
 
 from meltanolabs_target_csv.serialization import write_batch, write_header
+
+if sys.version_info >= (3, 12):
+    from typing import override
+else:
+    from typing_extensions import override
 
 if TYPE_CHECKING:
     from singer_sdk import Target
@@ -37,7 +42,7 @@ class CSVSink(BatchSink):
     def timestamp_time(self) -> datetime.datetime:  # noqa: D102
         if not self._timestamp_time:
             self._timestamp_time = datetime.datetime.now(
-                tz=pytz.timezone(self.config["timestamp_timezone"])
+                tz=zoneinfo.ZoneInfo(self.config["timestamp_timezone"])
             )
 
         return self._timestamp_time
@@ -62,6 +67,7 @@ class CSVSink(BatchSink):
             warnings.warn(
                 "The property `output_path_prefix` is deprecated, "
                 "please use `output_path`.",
+                stacklevel=2,
                 category=UserWarning,
             )
 
@@ -100,6 +106,7 @@ class CSVSink(BatchSink):
         """Get the encoding for the CSV file."""
         return self.config.get("encoding", "utf-8")
 
+    @override
     def setup(self) -> None:
         """Create the output file and write the header."""
         super().setup()
@@ -113,6 +120,7 @@ class CSVSink(BatchSink):
             encoding=self.encoding,
         )
 
+    @override
     def process_batch(self, context: dict) -> None:
         """Write out any prepped records and return once fully written."""
         output_file: Path = self.output_file

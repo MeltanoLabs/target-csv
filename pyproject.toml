@@ -18,7 +18,6 @@ license = "Apache-2.0"
 requires-python = ">=3.10"
 classifiers = [
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: Apache Software License",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.10",
@@ -26,11 +25,12 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
 ]
 dynamic = [ "version" ]
 dependencies = [
-  "pytz>=2025.1",
   "singer-sdk~=0.54.5",
+  "typing-extensions>=4.16.0 ; python_full_version < '3.12'",
 ]
 [[project.authors]]
 name = "Meltano"
@@ -58,8 +58,9 @@ line-length = 88
 ignore = [
   "ANN401", # Allow `typing.Any` as parameter type
 ]
-select = [
+extend-select = [
   "ANN",  # flake8-annotations
+  "B",    # flake8-bugbear
   "C90",  # mccabe
   "D",    # pydocstyle
   "E",    # pycodestyle (error)
@@ -79,3 +80,18 @@ allow-star-arg-any = true
 "**/tests/*" = [ "ANN", "D1", "S101" ]
 [tool.ruff.lint.pydocstyle]
 convention = "google"
+
+[tool.pytest]
+addopts = ["-ra"]
+filterwarnings = [
+  "error",
+  "once:Python 3.10 will reach its end of life on 2026-10:singer_sdk.helpers._compat.SingerSDKPythonEOLWarning",
+  "once:The property `output_path_prefix` is deprecated, please use `output_path`.:UserWarning",
+]
+log_level = "INFO"
+minversion = "9"
+strict = true
+testpaths = ["tests"]
+
+[tool.ty.rules]
+missing-override-decorator = "error"

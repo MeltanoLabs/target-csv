@@ -32,7 +32,7 @@ class TargetCSV(Target):
         th.Property(
             "output_path_prefix",
             th.StringType,
-            description=("DEPRECATED. Filesystem path where to store output files."),
+            description="DEPRECATED. Filesystem path where to store output files.",
         ),
         th.Property(
             "file_naming_scheme",
