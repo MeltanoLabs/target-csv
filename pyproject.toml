@@ -85,7 +85,7 @@ convention = "google"
 addopts = ["-ra"]
 filterwarnings = [
   "error",
-  "once:Python 3.10 will reach its end of life on 2026-10:singer_sdk.helpers._compat.SingerSDKPythonEOLWarning",
+  "once:Python 3.10 reached its end of life on 2026-10:singer_sdk.helpers._compat.SingerSDKPythonEOLWarning",
   "once:The property `output_path_prefix` is deprecated, please use `output_path`.:UserWarning",
 ]
 log_level = "INFO"
